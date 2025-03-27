@@ -1,35 +1,27 @@
 from pathlib import Path
-from dotenv import load_dotenv
 import os
-# import dj_database_url
-
-SECRET_KEY = os.getenv("SECRET_KEY")
-DEBUG = os.getenv("DEBUG", "False") == "True"
-
-# DATABASES = {
-#     "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
-# }
-
-ALLOWED_HOSTS = ["*"]
-
-
- 
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-# Static files for Render
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = "/static/"
+
 # Load environment variables from .env file
 load_dotenv(BASE_DIR / '.env')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-your-secret-key-here'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-your-secret-key-here')
+
+# Static files for Render
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = "/static/"
+
+# ALLOWED_HOSTS configuration
+ALLOWED_HOSTS = ['django-app-x838.onrender.com', 'localhost', '127.0.0.1']
+if os.getenv('ALLOWED_HOSTS'):
+    ALLOWED_HOSTS.extend(os.getenv('ALLOWED_HOSTS').split(','))
 
 # Application definition
 INSTALLED_APPS = [

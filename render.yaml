@@ -16,6 +16,8 @@ services:
         generateValue: true
       - key: DEBUG
         value: "False"
+      - key: ALLOWED_HOSTS
+        value: "django-app-x838.onrender.com"
     plan: free
 
 databases:
