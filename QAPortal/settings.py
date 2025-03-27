@@ -1,14 +1,14 @@
 from pathlib import Path
 from dotenv import load_dotenv
 import os
-import dj_database_url
+# import dj_database_url
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-DATABASES = {
-    "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
-}
+# DATABASES = {
+#     "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
+# }
 
 ALLOWED_HOSTS = ["*"]
 
