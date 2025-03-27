@@ -1,0 +1,87 @@
+I want to make a portal called QAPortal 
+it should have side navbar with the available services 
+tech stack: 
+a Django REST API
+react for frontend 
+
+
+service1:  Create Tasks on userstories on Azure DevOps 
+
+inputs 
+Authentication:
+Azure DevOps organization name (ThiqahDev)
+project name (SFDA.Faseh)
+user story id 
+list of tasks to be created ( design , review , execute, retest)
+
+
+
+
+The API endpoint should send a POST request to the Azure DevOps REST API: https://dev.azure.com/{organization}/{project}/_apis/wit/workitems/$Task?api-version=7.1-preview.3
+
+Output:
+If the Azure DevOps API call is successful (status code 200), return the full JSON response from Azure DevOps.
+If the Azure DevOps API call fails, return a JSON response with an "error" key and a "details" key containing the Azure DevOps error message.
+
+Existing cURL Request for review task:
+
+Bash
+
+curl --location 'https://dev.azure.com/ThiqahDev/SFDA.Faseh/_apis/wit/workitems/$Task?api-version=7.1-preview.3' \
+--header 'Content-Type: application/json-patch+json' \
+--header 'Accept: application/json' \
+--header 'Authorization: Basic <Base64EncodedPAT>' \  # <--- ADDED: This was missing in the original.
+--data-raw '[
+    {
+        "op": "add",
+        "path": "/fields/System.Title",
+        "from": null,
+        "value": "QC_Review user story"
+    },
+    {
+        "op": "add",
+        "path": "/fields/System.Description",
+        "from": null,
+        "value": "<div>... (long HTML content) ... </div>"  # See original for full content
+    },
+    {
+        "op": "add",
+        "path": "/fields/Microsoft.VSTS.Common.Activity",
+        "from": null,
+        "value": "Testing"
+    },
+    {
+        "op": "add",
+        "path": "/fields/Microsoft.VSTS.Scheduling.OriginalEstimate",
+        "from": null,
+        "value": 2
+    },
+    {
+        "op": "add",
+        "path": "/fields/Microsoft.VSTS.Scheduling.RemainingWork",
+        "value": 1
+    },
+    {
+        "op": "add",
+        "path": "/fields/System.AssignedTo",
+        "value": "a.mgazzar@dev.thiqah.sa"
+    },
+    {
+        "op": "add",
+        "path": "/fields/System.IterationPath",
+        "value": "SFDA.Faseh\\Sprint 44"
+    },
+    {
+        "op": "add",
+        "path": "/relations/-",
+        "value": {
+            "rel": "System.LinkTypes.Hierarchy-Reverse",
+            "url": "https://dev.azure.com/ThiqahDev/_apis/wit/workitems/{{us_id}}",
+            "attributes": {}
+        }
+    }
+]'
+
+
+
+

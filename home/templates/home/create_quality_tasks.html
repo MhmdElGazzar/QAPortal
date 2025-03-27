@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Quality Tasks{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Create Quality Tasks</h1>
+    
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="assignee" class="form-label">Assignee</label>
+            <input type="text" class="form-control" id="assignee" name="assignee" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="userstory_id" class="form-label">User Story ID</label>
+            <input type="text" class="form-control" id="userstory_id" name="userstory_id" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="iteration_path" class="form-label">Iteration Path</label>
+            <input type="text" class="form-control" id="iteration_path" name="iteration_path" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Tasks to Create</label>
+            <div class="mb-2">
+                <div class="d-flex align-items-center">
+                    <div class="form-check me-4" style="min-width: 120px;">
+                        <input class="form-check-input task-checkbox" type="checkbox" id="review" name="tasks" value="review">
+                        <label class="form-check-label" for="review">Review</label>
+                    </div>
+                    <input type="number" class="form-control form-control-sm estimate-input" style="width: 100px;" id="review_estimate" name="review_estimate" placeholder="Estimate" min="0">
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="d-flex align-items-center">
+                    <div class="form-check me-4" style="min-width: 120px;">
+                        <input class="form-check-input task-checkbox" type="checkbox" id="design_tests" name="tasks" value="design_tests">
+                        <label class="form-check-label" for="design_tests">Design Tests</label>
+                    </div>
+                    <input type="number" class="form-control form-control-sm estimate-input" style="width: 100px;" id="design_tests_estimate" name="design_tests_estimate" placeholder="Estimate" min="0">
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="d-flex align-items-center">
+                    <div class="form-check me-4" style="min-width: 120px;">
+                        <input class="form-check-input task-checkbox" type="checkbox" id="execute_tests" name="tasks" value="execute_tests">
+                        <label class="form-check-label" for="execute_tests">Execute Tests</label>
+                    </div>
+                    <input type="number" class="form-control form-control-sm estimate-input" style="width: 100px;" id="execute_tests_estimate" name="execute_tests_estimate" placeholder="Estimate" min="0">
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="d-flex align-items-center">
+                    <div class="form-check me-4" style="min-width: 120px;">
+                        <input class="form-check-input task-checkbox" type="checkbox" id="retest" name="tasks" value="retest">
+                        <label class="form-check-label" for="retest">Retest</label>
+                    </div>
+                    <input type="number" class="form-control form-control-sm estimate-input" style="width: 100px;" id="retest_estimate" name="retest_estimate" placeholder="Estimate" min="0">
+                </div>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const taskCheckboxes = document.querySelectorAll('.task-checkbox');
+            const estimateInputs = document.querySelectorAll('.estimate-input');
+            
+            function updateEstimateRequired(checkbox) {
+                const estimateId = checkbox.id + '_estimate';
+                const estimateInput = document.getElementById(estimateId);
+                if (checkbox.checked) {
+                    estimateInput.required = true;
+                    estimateInput.disabled = false;
+                } else {
+                    estimateInput.required = false;
+                    estimateInput.disabled = true;
+                    estimateInput.value = '';
+                }
+            }
+
+            taskCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => updateEstimateRequired(checkbox));
+                updateEstimateRequired(checkbox); // Initialize on page load
+            });
+        });
+    </script>
+
+    {% if error_message %}
+    <div class="alert alert-danger mt-4" role="alert">
+        {{ error_message }}
+    </div>
+    {% endif %}
+
+    {% if success_message %}
+    <div class="alert alert-success mt-4" role="alert">
+        <pre>{{ success_message }}</pre>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

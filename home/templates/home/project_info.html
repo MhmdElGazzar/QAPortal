@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Project Info{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Project Information</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Team Members</h5>
+                </div>
+                <div class="card-body">
+                    <select class="form-select" id="team-members">
+                        <option value="">Select a team member</option>
+                        {% for member in team_members %}
+                            <option value="{{ member }}">{{ member }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Iteration Paths</h5>
+                </div>
+                <div class="card-body">
+                    <select class="form-select" id="iteration-paths">
+                        <option value="">Select an iteration path</option>
+                        {% for path in iteration_paths %}
+                            <option value="{{ path }}">{{ path }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+1. Start with vibe PMing
+When starting a new project, ask AI to create a readme that includes:
+
+Requirements
+
+Tech stack
+
+Milestones (up to 5)
+
+3. Give AI the right rules & documentation
+b) Paste in documentation
+c) Set up global and project rules
+If you're using Cursor, you should create global and project-specific rules to control AI’s behavior. Here are a few global rules that I’ve added:
+
+Explain what you’ll do first and ask for my confirmation before coding.
+
+Do the simple thing first. Use modules instead of just a single file.
+
+Only make requested changes
+
+Do not write duplicate code - please look for existing solutions in the codebase.
+4. Ask AI NOT to code
+“Tell me your plan first; don’t code.”
+
+5. Ask AI for options and pick the simple one
+“Give me a few options, starting with the simplest first. Don’t code.”
+6. Break tasks into small steps
+In case it’s not obvious, simplicity is your best friend for vibe coding.
+
+Models like Claude 3.7 tend to act like overconfident interns who do more than you ask and introduce unnecessary bugs. Try these approaches to keep things simple:
+
+Ask AI to “Keep it simple” in your prompt.
+
+Ask AI to “Implement the simplest next step I can test.”
+
+Ask AI to change a specific file only.
+
+I recommend starting a fresh chat for each feature to avoid bloating AI’s context window. You must give your AI new grad intern specific steps like a good manager.
+8. Test ruthlessly after every change
+9. Don't hesitate to revert
+Cursor and Windsurf have a "Revert to checkpoint" button that restores past versions of your code. Use it liberally when AI:
+
+Makes changes that break your app
+
+Gets stuck in a doom loop trying to fix bugs
+
+Starts changing all your files without reason
+
+12. Ask AI to explain the code
+Vibe coding is fun, but you should also use it to become more technical:
+
+For individual files, ask AI to “explain how this file works in simple terms.” or “Add comments that explain the code.”
+
+For entire code bases, use Repomix to create a single file with your entire codebase and then paste it into a large context AI model like Gemini with the prompt: “Can you explain how this app works? Give me an overview of the tech architecture.”
