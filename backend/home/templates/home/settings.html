@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Settings - QA Portal{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Settings</h2>
+    {% if success_message %}
+    <div class="alert alert-success mb-4">
+        {{ success_message }}
+    </div>
+    {% endif %}
+    {% if error_message %}
+    <div class="alert alert-danger mb-4">
+        {{ error_message }}
+    </div>
+    {% endif %}
+    <div class="card">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="azure_org" class="form-label">Azure DevOps Organization</label>
+                    <input type="text" class="form-control" id="azure_org" name="azure_org" value="{{ settings.AZURE_DEVOPS_ORG }}">
+                </div>
+                <div class="mb-3">
+                    <label for="azure_project" class="form-label">Azure DevOps Project</label>
+                    <input type="text" class="form-control" id="azure_project" name="azure_project" value="{{ settings.AZURE_DEVOPS_PROJECT }}">
+                </div>
+                <div class="mb-3">
+                    <label for="azure_api_version" class="form-label">Azure DevOps API Version</label>
+                    <input type="text" class="form-control" id="azure_api_version" name="azure_api_version" value="{{ settings.AZURE_DEVOPS_API_VERSION }}">
+                </div>
+                <div class="mb-3">
+                    <label for="azure_pat" class="form-label">Azure DevOps Personal Access Token</label>
+                    <input type="password" class="form-control" id="azure_pat" name="azure_pat" value="{{ settings.AZURE_DEVOPS_PAT }}">
+                </div>
+                <div class="mb-3">
+                    <label for="openai_key" class="form-label">OpenAI API Key</label>
+                    <input type="password" class="form-control" id="openai_key" name="openai_key" value="{{ settings.OPENAI_API_KEY }}">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Settings</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

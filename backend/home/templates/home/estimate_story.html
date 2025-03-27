@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Story Estimation</h2>
+    <div class="card">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label for="story_id">User Story ID</label>
+                    <input type="text" class="form-control" id="story_id" name="story_id" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Get Estimates</button>
+            </form>
+        </div>
+    </div>
+
+    {% if error_message %}
+    <div class="alert alert-danger mt-3">
+        {{ error_message }}
+    </div>
+    {% endif %}
+
+    {% if estimates %}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>Story Details</h5>
+        </div>
+        <div class="card-body">
+            <h6>Title: {{ story_title }}</h6>
+            
+            <h5 class="mt-4">Estimated Quality Tasks</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Estimated Hours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task, estimate in estimates.items %}
+                    <tr>
+                        <td>{{ task }}</td>
+                        <td>{{ estimate }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <form method="POST" action="{% url 'create_quality_tasks' %}" class="mt-4">
+                {% csrf_token %}
+                <input type="hidden" name="userstory_id" value="{{ story_id }}">
+                {% for task, estimate in estimates.items %}
+                <input type="hidden" name="tasks" value="{{ task }}">
+                <input type="hidden" name="{{ task }}_estimate" value="{{ estimate }}">
+                {% endfor %}
+                <div class="form-group mb-3">
+                    <label for="assignee">Assignee</label>
+                    <input type="text" class="form-control" id="assignee" name="assignee" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="iteration_path">Iteration Path</label>
+                    <input type="text" class="form-control" id="iteration_path" name="iteration_path" required>
+                </div>
+                <button type="submit" class="btn btn-success">Create Tasks</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
